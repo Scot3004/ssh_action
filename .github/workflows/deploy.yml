@@ -1,0 +1,19 @@
+name: Deploy
+on:
+  push:
+    branches: ['master', 'main']
+    paths-ignore: ['docs/**']
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: print secret
+        run: echo ${{ secrets.HOST }}
+      - name: executing remote ssh commands using ssh key
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
+          passphrase: ${{ secrets.PASSPHRASE }}
+          script: whoami
